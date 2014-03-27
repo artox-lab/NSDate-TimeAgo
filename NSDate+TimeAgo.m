@@ -198,6 +198,29 @@ NSLocalizedStringFromTableInBundle(key, @"NSDateTimeAgo", [NSBundle bundleWithPa
     return [self stringFromFormat:@"%%d %@seconds ago" withValue:components.second];
 }
 
+- (NSString *)dateTimeAgoWithLimit:(NSTimeInterval)limit
+{
+    if (fabs([self timeIntervalSinceDate:[NSDate date]]) <= limit)
+        return [self timeAgo];
+    
+    NSDate *now = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDateComponents *componentsForNow = [calendar components:NSCalendarUnitYear fromDate:now];
+    NSDateComponents *componentsForCurrentDate = [calendar components:NSCalendarUnitYear fromDate:self];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    
+    NSArray* languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
+    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:[languages firstObject]];
+    [dateFormatter setLocale:locale];
+    
+    if (componentsForNow.year != componentsForCurrentDate.year) {
+        dateFormatter.dateFormat = @"d MMMM yyyy";
+    } else {
+        dateFormatter.dateFormat = @"d MMMM";
+    }
+    return [dateFormatter stringFromDate:self];
+}
 
 
 - (NSString *)dateTimeUntilNow
@@ -328,7 +351,7 @@ NSLocalizedStringFromTableInBundle(key, @"NSDateTimeAgo", [NSBundle bundleWithPa
 {
     if (fabs([self timeIntervalSinceDate:[NSDate date]]) <= limit)
         return [self timeAgo];
-
+    
     return [formatter stringFromDate:self];
 }
 

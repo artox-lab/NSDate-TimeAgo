@@ -1,15 +1,18 @@
 @interface NSDate (TimeAgo)
-- (NSString *) timeAgoSimple;
-- (NSString *) timeAgo;
-- (NSString *) timeAgoWithLimit:(NSTimeInterval)limit;
-- (NSString *) timeAgoWithLimit:(NSTimeInterval)limit dateFormat:(NSDateFormatterStyle)dFormatter andTimeFormat:(NSDateFormatterStyle)tFormatter;
-- (NSString *) timeAgoWithLimit:(NSTimeInterval)limit dateFormatter:(NSDateFormatter *)formatter;
+
+- (NSString *)timeAgoSimple;
+- (NSString *)timeAgo;
+- (NSString *)timeAgoWithLimit:(NSTimeInterval)limit;
+- (NSString *)timeAgoWithLimit:(NSTimeInterval)limit dateFormat:(NSDateFormatterStyle)dFormatter andTimeFormat:(NSDateFormatterStyle)tFormatter;
+- (NSString *)timeAgoWithLimit:(NSTimeInterval)limit dateFormatter:(NSDateFormatter *)formatter;
 
 // timeAgoSimple, but switches to showing just date after limit
-- (NSString *) timeAgoSimpleWithLimit:(NSTimeInterval)limit;
+- (NSString *)timeAgoSimpleWithLimit:(NSTimeInterval)limit;
 
 // this method only returns "{value} {unit} ago" strings and no "yesterday"/"last month" strings
 - (NSString *)dateTimeAgo;
+
+- (NSString *)dateTimeAgoWithLimit:(NSTimeInterval)limit;
 
 // this method gives when possible the date compared to the current calendar date: "this morning"/"yesterday"/"last week"/..
 // when more precision is needed (= less than 6 hours ago) it returns the same output as dateTimeAgo
