@@ -209,10 +209,8 @@ NSLocalizedStringFromTableInBundle(key, @"NSDateTimeAgo", [NSBundle bundleWithPa
     NSDateComponents *componentsForCurrentDate = [calendar components:NSCalendarUnitYear fromDate:self];
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    
-    NSArray* languages = [[NSUserDefaults standardUserDefaults] objectForKey:@"AppleLanguages"];
-    NSLocale *locale = [[NSLocale alloc] initWithLocaleIdentifier:[languages firstObject]];
-    [dateFormatter setLocale:locale];
+
+    [dateFormatter setLocale:[NSLocale localeWithLocaleIdentifier:@"ru"]];
     
     if (componentsForNow.year != componentsForCurrentDate.year) {
         dateFormatter.dateFormat = @"d MMMM yyyy";
@@ -394,7 +392,7 @@ NSLocalizedStringFromTableInBundle(key, @"NSDateTimeAgo", [NSBundle bundleWithPa
 -(NSString *)getLocaleFormatUnderscoresWithValue:(double)value
 {
     NSString *localeCode = [[NSLocale preferredLanguages] objectAtIndex:0];
-    
+
     // Russian (ru)
     if([localeCode isEqual:@"ru"]) {
         int XY = (int)floor(value) % 100;
